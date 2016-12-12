@@ -16,6 +16,9 @@ Zapping was inspired by a classic TV experience
 - You start watching in the middle of a program, you skip boring intro screens-
 - You don't need to decide for a specific video
 
+## Hosted on GitHub Pages
+- The "production" code is placed in gh-pages branch
+
 ## Technical info
 - YouTube players are based on [YouTube iFrame API](https://developers.google.com/youtube/iframe_api_reference?hl=pl)
 - HTML & CSS is build and maintained with wonderful [Webflow](webflow.io)
