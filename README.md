@@ -25,9 +25,15 @@ Zapping was inspired by a classic TV experience
 - There's no server side. There's no database, the data for the videos is stored directly in DOM and parsed with jQuery
 - Videos are chosen manually and need to be added manually into the list in HTML. I prepared a simple script to parse YouTube page that prepares the video data in the right format for me, so that I can just copy paste the list of videos
 
+## Tricks & Quirks
+- The goal is to make channels switch immediately. This is achieved by "prefetching" videos, so playing 3 videos in the same time and playing sound only for one of them
+- To hide background videos, I used CSS transform, because z-index is slow, and display:none can stop videos from rendering in some browsers. Also not the overflow:hidden wrapper to prevent the transformed videos to be visible when outside of their container
+- When switching channel, even if upcoming video is not ready, we immediately show info about this video. This provides immediate feedback needed for fast channel surfing.
+- Mobile browsers prevent videos to be autoplayed without user interaction. That's why there is a "Start zapping" button, so that we can start videos after user concent
+
 ## Possible improvements in future
 - Enable selecting a channel from menu
 - We can use YouTube API and allow people to surf channels based on their input query.
 - Add autohide for buttons bar, so that it is not visible when you're not using it
+- Find a better way to prefetch videos, instead of just playing them in the background
 - Pull data for channel only when needed, no need to download large list upfront (but this data is anyway small comapred to the videos)
-
