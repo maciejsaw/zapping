@@ -1,5 +1,6 @@
 body {
   overflow: hidden;
+  background-color: #18191b;
   font-family: Oswald, sans-serif;
 }
 
@@ -132,6 +133,12 @@ a {
   top: 0px;
   right: 0px;
   bottom: 140px;
+  -webkit-transition: bottom 1200ms ease-in-out;
+  transition: bottom 1200ms ease-in-out;
+}
+
+.main-video-big-area.is-fullscreen {
+  bottom: 0px;
 }
 
 .bottom-controls-wrapper {
@@ -145,6 +152,16 @@ a {
   background-position: 100% 100%;
   background-size: 80px;
   background-repeat: no-repeat;
+  -webkit-transition: -webkit-transform 1200ms ease-in-out;
+  transition: -webkit-transform 1200ms ease-in-out;
+  transition: transform 1200ms ease-in-out;
+  transition: transform 1200ms ease-in-out, -webkit-transform 1200ms ease-in-out;
+}
+
+.bottom-controls-wrapper.is-fullscreen {
+  -webkit-transform: translate(0px, 100%);
+  -ms-transform: translate(0px, 100%);
+  transform: translate(0px, 100%);
 }
 
 .control-buttons-row {
@@ -266,6 +283,8 @@ a {
 }
 
 .info-bar-title {
+  overflow: hidden;
+  max-width: 70%;
   float: right;
   line-height: 1.33em;
   text-align: right;
@@ -593,6 +612,22 @@ a {
   display: none;
 }
 
+.bottom-bar-holder {
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  width: 100%;
+  height: 142px;
+}
+
+.overlay-that-detects-mousemovement {
+  position: absolute;
+  left: 10%;
+  top: 14%;
+  right: 10%;
+  bottom: 19%;
+}
+
 @media (max-width: 767px) {
   .bottom-controls-wrapper {
     background-position: 100% 100%;
@@ -604,6 +639,7 @@ a {
     font-size: 18px;
   }
   .info-bar-title {
+    max-width: 100%;
     margin-top: 10px;
     float: left;
     clear: both;
