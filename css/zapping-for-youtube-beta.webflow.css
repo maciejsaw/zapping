@@ -133,12 +133,14 @@ a {
   top: 0px;
   right: 0px;
   bottom: 140px;
-  -webkit-transition: bottom 1200ms ease-in-out;
-  transition: bottom 1200ms ease-in-out;
+  -webkit-transition: bottom 400ms linear;
+  transition: bottom 400ms linear;
 }
 
 .main-video-big-area.is-fullscreen {
   bottom: 0px;
+  -webkit-transition-duration: 1200ms;
+  transition-duration: 1200ms;
 }
 
 .bottom-controls-wrapper {
@@ -152,16 +154,18 @@ a {
   background-position: 100% 100%;
   background-size: 80px;
   background-repeat: no-repeat;
-  -webkit-transition: -webkit-transform 1200ms ease-in-out;
-  transition: -webkit-transform 1200ms ease-in-out;
-  transition: transform 1200ms ease-in-out;
-  transition: transform 1200ms ease-in-out, -webkit-transform 1200ms ease-in-out;
+  -webkit-transition: -webkit-transform 400ms ease-in-out;
+  transition: -webkit-transform 400ms ease-in-out;
+  transition: transform 400ms ease-in-out;
+  transition: transform 400ms ease-in-out, -webkit-transform 400ms ease-in-out;
 }
 
 .bottom-controls-wrapper.is-fullscreen {
   -webkit-transform: translate(0px, 100%);
   -ms-transform: translate(0px, 100%);
   transform: translate(0px, 100%);
+  -webkit-transition-duration: 1200ms;
+  transition-duration: 1200ms;
 }
 
 .control-buttons-row {
