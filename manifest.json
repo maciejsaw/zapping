@@ -1,0 +1,13 @@
+{
+  "short_name": "Zapping for YT",
+  "name": "Zapping for YouTube",
+  "icons": [
+    {
+      "src": "/images/zapping-icon-youtube-webclip.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/index.html",
+  "display": "standalone"
+}
