@@ -633,8 +633,8 @@ a {
 }
 
 .overlay-that-detects-mousemovement.second {
-  top: 74%;
-  bottom: 14%;
+  top: 64%;
+  bottom: 19%;
 }
 
 @media (max-width: 767px) {
