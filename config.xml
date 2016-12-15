@@ -20,7 +20,7 @@
 
   <icon src="icon.png" />
 
-  
+
   <splash src="splash.png" />
   <gap:splash src="res/screen/android/screen-xhdpi-portrait.png"      gap:platform="android" gap:qualifier="port-xhdpi" />
 
@@ -29,6 +29,8 @@
   <preference name="SplashMaintainAspectRatio" value="true" />
   <preference name="show-splash-screen-spinner" value="false" />
   <preference name="AllowInlineMediaPlayback" value="true" />
+  <preference name="KeepRunning" value="false"/>
+  <preference name="SplashScreen" value="screen"/>
 
   <plugin name="cordova-plugin-splashscreen" />
 
