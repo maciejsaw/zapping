@@ -24,10 +24,11 @@
   <splash src="splash.png" />
   <gap:splash src="res/screen/android/screen-xhdpi-portrait.png"      gap:platform="android" gap:qualifier="port-xhdpi" />
 
-    <edit-config file="AndroidManifest.xml" mode="merge"
-                 target="/manifest/application/activity">
-        <activity android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
-    </edit-config>
+	<gap:config-file platform="android" parent="/manifest">
+	    <application android:theme="@android:style/Theme.NoTitleBar" >
+	        <activity android:theme="@android:style/Theme.NoTitleBar.Fullscreen" ></activity>
+	    </application>
+	</gap:config-file>
 
   <preference name="fullscreen" value="true" /> <!-- all: hides the status bar at the top of the screen -->
   <preference name="SplashMaintainAspectRatio" value="true" />
