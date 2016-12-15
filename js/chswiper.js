@@ -80,6 +80,9 @@ function onYouTubeIframeAPIReady() {
                 if (event.data === 0) {
                     playAnotherVideoInPlayerX(event.target);
                 }
+            },
+            'onError': function(event) {
+                removeCurrentVideoFromPlaylistAndPlayAnother(event.target);
             }
         }
     });
@@ -106,6 +109,9 @@ function onYouTubeIframeAPIReady() {
                 if (event.data === 0) {
                     playAnotherVideoInPlayerX(event.target);
                 }
+            },
+            'onError': function(event) {
+                removeCurrentVideoFromPlaylistAndPlayAnother(event.target);
             }
         }
     });
@@ -131,6 +137,9 @@ function onYouTubeIframeAPIReady() {
                 if (event.data === 0) {
                     playAnotherVideoInPlayerX(event.target);
                 }
+            },
+            'onError': function(event) {
+                removeCurrentVideoFromPlaylistAndPlayAnother(event.target);
             }
         }
     });
@@ -366,6 +375,27 @@ function playAnotherVideoInPlayerX(playerObject) {
     //TODO: of channel is current, show info bar briefly
 }
 
+//removing videos on error form playlist
+var errorTimeout;
+function removeCurrentVideoFromPlaylistAndPlayAnother(playerObject) {
+    //debouncing error just in case
+    clearTimeout(errorTimeout);
+
+    errorTimeout = setTimeout(function(){ 
+        console.log('error, removing video from playlist...');
+
+        var playerContainer = $(playerObject.a);
+
+        var playerNumber = playerContainer.attr('id');
+        var channelData = getChannelDataForPlayer(playerNumber);
+
+        //unmark the ended video so that its not current
+        channelData.find('.video-item.current').removeClass('current').remove();
+
+        playChannelXinPlayerY(channelData, ytPlayers[playerNumber]);
+    }, 2000);
+}
+
 function toggleTransformHamburgerIconToCloseIcon() {
     $('.menu-icon-with-css').toggleClass('transformed-to-x');
     $('.menu-icon-with-css').find('.menu-icon-line').toggleClass('transformed-to-x');
@@ -462,7 +492,6 @@ var mouseMovementCounter = 0;
 var mouseMovementShowTimer = 0;
 
 $('body').on('mousemove', '.bottom-bar-holder, .overlay-that-detects-mousemovement, .menu-box', function(event) {
-    console.log('mousemove');
 
     clearTimeout(mouseMovementHideTimer);
     clearTimeout(mouseMovementShowTimer);
