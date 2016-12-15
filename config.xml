@@ -17,6 +17,23 @@
       Maciej Sawicki
   </author>
 
+
+  <icon src="icon.png" />
+  <splash src="splash.png" />
+
+
+
+  <preference name="fullscreen" value="true" /> <!-- all: hides the status bar at the top of the screen -->
+  <preference name="SplashMaintainAspectRatio" value="true" />
+
+
+
+  <plugin name="cordova-plugin-splashscreen" />
+  <preference name="AllowInlineMediaPlayback" value="true" />
+
+
+
+
   <access origin="*"/>
   <!-- Added the following intents to support the removal of whitelist code from base cordova to a plugin -->
   <!-- Whitelist configuration. Refer to https://cordova.apache.org/docs/en/edge/guide_appdev_whitelist_index.md.html -->
