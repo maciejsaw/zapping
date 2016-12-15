@@ -19,19 +19,18 @@
 
 
   <icon src="icon.png" />
-  <splash src="splash.png" />
 
+  
+  <splash src="splash.png" />
+  <gap:splash src="res/screen/android/screen-xhdpi-portrait.png"      gap:platform="android" gap:qualifier="port-xhdpi" />
 
 
   <preference name="fullscreen" value="true" /> <!-- all: hides the status bar at the top of the screen -->
   <preference name="SplashMaintainAspectRatio" value="true" />
-
-
-
-  <plugin name="cordova-plugin-splashscreen" />
+  <preference name="show-splash-screen-spinner" value="false" />
   <preference name="AllowInlineMediaPlayback" value="true" />
 
-
+  <plugin name="cordova-plugin-splashscreen" />
 
 
   <access origin="*"/>
