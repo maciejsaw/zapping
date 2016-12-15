@@ -12,6 +12,14 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 =            Getting videos data            =
 ===========================================*/
 
+
+//loading more videos from separate file and apending it to the list
+//in future this can be more lazy loading, divided into several files for example
+var additionalLoadedVideos = $('<div></div>');
+additionalLoadedVideos.load('http://zappingforyoutube.com/channelsList.html', function() {
+   additionalLoadedVideos.children().appendTo('#list-of-videos');
+});
+
 //we use DOM elements to get video IDs
 //we set list of videos in webflow, so we want to keep it usable in webflow while not showin
 //all the data for users
@@ -19,7 +27,8 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 var $initialChannel = $('#list-of-videos').find('.channel-item.current');
 
 //we hide uneeded links and data in DOM, so that we can keep edit them in Webflow but they won't be shown for users
-$('.video-item').addClass('hidden');
+//we do this with CSS so I commented the line below
+//$('.video-item').addClass('hidden');
 
 //we want to hide videos that are not current
 //TODO: we currently only know what video is playing when we go this channel
@@ -277,7 +286,8 @@ function showInfoBarBrieflyForCurrentChannel() {
 //calculating video time when changing channel based on your current date and time
 function calculateSeekToTime(channelData) {
     var currentDate = new Date();
-    var t = currentDate.getHours()*3600 + currentDate.getMinutes()*60 + currentDate.getSeconds()*1; //24 hour cycle until more videos are added
+    //24 hour cycle + part of the day, because we don't want the same videos to play at the same hour 
+    var t = currentDate.getHours()*3600 + currentDate.getMinutes()*60 + currentDate.getSeconds()*1 + 28800;
     //prepare videos from which we start to iterate
     var videoDataArray = channelData.find('.video-item');
     var videoData = videoDataArray.first();
