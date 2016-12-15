@@ -24,6 +24,10 @@
   <splash src="splash.png" />
   <gap:splash src="res/screen/android/screen-xhdpi-portrait.png"      gap:platform="android" gap:qualifier="port-xhdpi" />
 
+    <edit-config file="AndroidManifest.xml" mode="merge"
+                 target="/manifest/application/activity">
+        <activity android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+    </edit-config>
 
   <preference name="fullscreen" value="true" /> <!-- all: hides the status bar at the top of the screen -->
   <preference name="SplashMaintainAspectRatio" value="true" />
@@ -31,6 +35,7 @@
   <preference name="AllowInlineMediaPlayback" value="true" />
   <preference name="KeepRunning" value="false"/>
   <preference name="SplashScreen" value="screen"/>
+  <preference name="SplashScreenDelay" value="5000"/>
 
   <plugin name="cordova-plugin-splashscreen" />
 
