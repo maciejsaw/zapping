@@ -70,6 +70,7 @@ function onYouTubeIframeAPIReady() {
             autohide: 1,
             modestbranding: 1,
             playsinline: 1,
+            allowfullscreen: 0,
         },
         events: {
             'onReady': function(event) {
@@ -98,6 +99,7 @@ function onYouTubeIframeAPIReady() {
             autohide: 1,
             modestbranding: 1,
             playsinline: 1,
+            allowfullscreen: 0,
         },
         events: {
             'onReady': function(event) {
@@ -127,6 +129,7 @@ function onYouTubeIframeAPIReady() {
             autohide: 1,
             modestbranding: 1,
             playsinline: 1,
+            allowfullscreen: 0,
         },
         events: {
             'onReady': function(event) {
