@@ -172,10 +172,13 @@ function hideIntroSpinner() {
 function startVideosInAllPlayers() {
     ytPlayers.player1.playVideo();
     ytPlayers.player1.mute();
+    ytPlayers.player1.setPlaybackQuality('medium');
     ytPlayers.player2.playVideo();
     ytPlayers.player2.unMute();
+    ytPlayers.player2.setPlaybackQuality('default');
     ytPlayers.player3.playVideo();
     ytPlayers.player3.mute();
+    ytPlayers.player3.setPlaybackQuality('medium');
 }
 
 /* REFACTOR TODO: 
@@ -202,6 +205,12 @@ function switchToNextChannel() {
     var nextChannelData = currentChannelData.next(); 
     //if current video is last on the list then the second video on the list will be preloaded
     if (nextChannelData.length === 0) { nextChannelData = $AllChannelsData.find('.channel-item').first(); }
+    if (VideoPrefetchingStopped === true) { 
+        playChannelXinPlayerY(nextChannelData, ytPlayers[nextPlayerNumber]); 
+        VideoPrefetchingStopped = false;
+    }
+    starTimerUntilPrefetchingStops();
+
     var upcomingChannelData = nextChannelData.next(); 
     //if current video is second to last, then preload the first video on the list
     if (upcomingChannelData.length === 0) { upcomingChannelData = $AllChannelsData.find('.channel-item').first(); }
@@ -209,6 +218,11 @@ function switchToNextChannel() {
     console.log(upcomingChannelData);
 
     playChannelXinPlayerY(upcomingChannelData, ytPlayers[prevPlayerNumber]);
+
+    //switch which video has good quality
+    ytPlayers[currentPlayerNumber].setPlaybackQuality('medium');
+    ytPlayers[prevPlayerNumber].setPlaybackQuality('medium');
+    ytPlayers[nextPlayerNumber].setPlaybackQuality('default');
 
     //mark current playing channel on list
     currentChannelData.removeClass('current');
@@ -245,11 +259,22 @@ function switchToPrevChannel() {
     var prevChannelData = currentChannelData.prev(); 
     //if current video is first on the list then the second to last video on the list will be preloaded
     if (prevChannelData.length === 0) { prevChannelData = $AllChannelsData.find('.channel-item').last(); }
+    if (VideoPrefetchingStopped === true) { 
+        playChannelXinPlayerY(prevChannelData, ytPlayers[prevPlayerNumber]);
+        VideoPrefetchingStopped = false;
+    }
+    starTimerUntilPrefetchingStops();
+
     var upcomingChannelData = prevChannelData.prev(); 
     //if current video is second to first, then preload the last video on the list
     if (upcomingChannelData.length === 0) { upcomingChannelData = $AllChannelsData.find('.channel-item').last(); }
     
     playChannelXinPlayerY(upcomingChannelData, ytPlayers[nextPlayerNumber]);
+
+    //switch which video has good quality
+    ytPlayers[currentPlayerNumber].setPlaybackQuality('medium');
+    ytPlayers[nextPlayerNumber].setPlaybackQuality('medium');
+    ytPlayers[prevPlayerNumber].setPlaybackQuality('default');
 
     //mark current playing video Id on list of links
     currentChannelData.removeClass('current');
@@ -393,7 +418,7 @@ function removeCurrentVideoFromPlaylistAndPlayAnother(playerObject) {
         channelData.find('.video-item.current').removeClass('current').remove();
 
         playChannelXinPlayerY(channelData, ytPlayers[playerNumber]);
-    }, 2000);
+    }, 700);
 }
 
 function toggleTransformHamburgerIconToCloseIcon() {
@@ -442,12 +467,14 @@ $(document).on('click', '[toggle-info-bar].grayed-out', function() {
 //we bind it after channels are prepared, after user clicks start zapping
 $(document).on('click', '[start-zapping]', function() {
     $(document).on('keydown', function(e){
-        if (e.keyCode === 37) { 
+        if (e.keyCode === 37 || e.keyCode === 65) { 
             switchToPrevChannel();
             enterFullscreenMode();
-        } else if (e.keyCode === 39) {
+        } else if (e.keyCode === 39 || e.keyCode === 83) {
             switchToNextChannel();
             enterFullscreenMode();
+        } else if (e.keyCode === 38) { //arrow up
+            $('.info-icon').trigger('click');
         }
     });
 });
@@ -526,6 +553,38 @@ $(document).on('click touchstart', '.bottom-bar-holder, .overlay-that-detects-mo
 });
 
 /*=====  End of Hiding buttons bar  ======*/
+
+/*=========================================================================
+=            Stopping video prefetching - leaving zapping mode            =
+=========================================================================*/
+
+//this is to improve performance on mobile, when you already chosen a video to wathch, other
+//videos will be stopped so that there won't be hickups
+//the next time you switch a channel, the prefetching should be turned on again
+
+var VideoPrefetchingStopped = false;
+function stopVideoPrefetching() {
+    console.log('stoppping prefetching...');
+
+    var nextPlayerNumber = $('.next-player').attr('id');
+    var prevPlayerNumber = $('.prev-player').attr('id');
+
+    ytPlayers[nextPlayerNumber].stopVideo();
+    ytPlayers[prevPlayerNumber].stopVideo();
+
+    VideoPrefetchingStopped = true;
+}
+
+var VideoPrefetchingTimer;
+function starTimerUntilPrefetchingStops() {
+    clearTimeout(VideoPrefetchingTimer);
+    VideoPrefetchingTimer = setTimeout(function() {
+        stopVideoPrefetching();
+    }, 35000);
+}
+
+/*=====  End of Stopping video prefetching - leaving zapping mode  ======*/
+
 
 
 /*=============================
