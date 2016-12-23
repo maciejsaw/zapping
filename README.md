@@ -19,6 +19,11 @@ Zapping was inspired by a classic TV experience
 ## Hosted on GitHub Pages
 - The "production" code is placed in [gh-pages](https://github.com/maciejsaw/zapping/tree/gh-pages) branch
 
+## Mobile app
+- To enable fullscreen experience on mobile devices, users could install a mobile app built with PhoneGap built
+- The PhoneGap configuration is in [phonegap branch](https://github.com/maciejsaw/zapping/tree/phonegap)
+- It's a very simple webview wrapper that uses iframe to load the page
+
 ## Technical info
 - YouTube players are based on [YouTube iFrame API](https://developers.google.com/youtube/iframe_api_reference?hl=pl)
 - HTML & CSS is build and maintained with wonderful [Webflow](http://webflow.io)
