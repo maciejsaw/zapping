@@ -19,11 +19,6 @@ Zapping was inspired by a classic TV experience
 ## Hosted on GitHub Pages
 - The "production" code is placed in [gh-pages](https://github.com/maciejsaw/zapping/tree/gh-pages) branch
 
-## Mobile app
-- To enable fullscreen experience on mobile devices, users could install a mobile app built with PhoneGap built
-- The PhoneGap configuration is in [phonegap branch](https://github.com/maciejsaw/zapping/tree/phonegap)
-- It's a very simple webview wrapper that uses iframe to load the page
-
 ## Technical info
 - YouTube players are based on [YouTube iFrame API](https://developers.google.com/youtube/iframe_api_reference?hl=pl)
 - HTML & CSS is build and maintained with wonderful [Webflow](http://webflow.io)
@@ -31,12 +26,19 @@ Zapping was inspired by a classic TV experience
 - There's no server side. There's no database, the data for the videos is stored directly in DOM and parsed with jQuery
 - Videos are chosen manually and need to be added manually into the list in HTML. I prepared a simple script to parse YouTube page that prepares the video data in the right format for me, so that I can just copy paste the list of videos
 
+## Mobile app
+- To enable fullscreen experience on mobile devices, users could install a mobile app built with PhoneGap built
+- The PhoneGap configuration is in [phonegap branch](https://github.com/maciejsaw/zapping/tree/phonegap)
+- It's a very simple webview wrapper that uses iframe to load the page
+
 ## Tricks & Quirks
 - The goal is to make channels switch immediately. This is achieved by "prefetching" videos, so playing 3 videos in the same time and playing sound only for one of them
 - To hide background videos, I used CSS transform, because z-index is slow, and display:none can stop videos from rendering in some browsers. Also not the overflow:hidden wrapper to prevent the transformed videos to be visible when outside of their container
 - When switching channel, even if upcoming video is not ready, we immediately show info about this video. This provides immediate feedback needed for fast channel surfing.
 - Mobile browsers prevent videos to be autoplayed without user interaction. That's why there is a "Start zapping" button, so that we can start videos after user concent
 - We immitate the TV experience, so we want the videos to continue in the background, as if they were not stopped. This is achieved by calculating number of seconds in the cycle and starting a video at the calculated "seek to" time each time it's prefetched
+- The videos that are playing in the background are played in lower quality. After switching a channel, current video is set to auto quality automatically
+- After about 30 seconds of inactivity, the background videos are stopped to save bandwidth and fix jerky video on slower mobile devices
 
 ## Possible improvements in future
 - Enable selecting a channel from menu
