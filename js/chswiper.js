@@ -175,13 +175,13 @@ function hideIntroSpinner() {
 function startVideosInAllPlayers() {
     ytPlayers.player1.playVideo();
     ytPlayers.player1.mute();
-    ytPlayers.player1.setPlaybackQuality('medium');
+    ytPlayers.player1.setPlaybackQuality('small');
     ytPlayers.player2.playVideo();
     ytPlayers.player2.unMute();
     ytPlayers.player2.setPlaybackQuality('default');
     ytPlayers.player3.playVideo();
     ytPlayers.player3.mute();
-    ytPlayers.player3.setPlaybackQuality('medium');
+    ytPlayers.player3.setPlaybackQuality('small');
 }
 
 /* REFACTOR TODO: 
@@ -223,8 +223,8 @@ function switchToNextChannel() {
     playChannelXinPlayerY(upcomingChannelData, ytPlayers[prevPlayerNumber]);
 
     //switch which video has good quality
-    ytPlayers[currentPlayerNumber].setPlaybackQuality('medium');
-    ytPlayers[prevPlayerNumber].setPlaybackQuality('medium');
+    ytPlayers[currentPlayerNumber].setPlaybackQuality('small');
+    ytPlayers[prevPlayerNumber].setPlaybackQuality('small');
     ytPlayers[nextPlayerNumber].setPlaybackQuality('default');
 
     //mark current playing channel on list
@@ -275,8 +275,8 @@ function switchToPrevChannel() {
     playChannelXinPlayerY(upcomingChannelData, ytPlayers[nextPlayerNumber]);
 
     //switch which video has good quality
-    ytPlayers[currentPlayerNumber].setPlaybackQuality('medium');
-    ytPlayers[nextPlayerNumber].setPlaybackQuality('medium');
+    ytPlayers[currentPlayerNumber].setPlaybackQuality('small');
+    ytPlayers[nextPlayerNumber].setPlaybackQuality('small');
     ytPlayers[prevPlayerNumber].setPlaybackQuality('default');
 
     //mark current playing video Id on list of links
