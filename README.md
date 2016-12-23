@@ -34,7 +34,7 @@ Zapping was inspired by a classic TV experience
 
 ## Tricks & Quirks
 - The goal is to make channels switch immediately. This is achieved by "prefetching" videos, so playing 3 videos in the same time and playing sound only for one of them
-- To hide background videos, I used CSS transform, because z-index is slow, and display:none can stop videos from rendering in some browsers. Also not the overflow:hidden wrapper to prevent the transformed videos to be visible when outside of their container
+- To hide background videos, I used CSS transform, because z-index is slow, and display:none can stop videos from rendering in some browsers. Note the "overflow:hidden" wrapper to prevent the transformed videos to be visible when outside of their container
 - When switching channel, even if upcoming video is not ready, we immediately show info about this video. This provides immediate feedback needed for fast channel surfing.
 - Mobile browsers prevent videos to be autoplayed without user interaction. That's why there is a "Start zapping" button, so that we can start videos after user concent
 - We immitate the TV experience, so we want the videos to continue in the background, as if they were not stopped. This is achieved by calculating number of seconds in the cycle and starting a video at the calculated "seek to" time each time it's prefetched
