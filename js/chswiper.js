@@ -1,63 +1,63 @@
-//TODO: async load first videos
-//TODO: wrap everything in document ready
+//only for test environment
+//if (window.location.host = "zapping-for-youtube-beta.webflow.io") {
 
-// This code loads the IFrame Player API code asynchronously.
-var tag = document.createElement('script');
-
-tag.src = "https://www.youtube.com/iframe_api";
-var firstScriptTag = document.getElementsByTagName('script')[0];
-firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+var $initialChannel;
+var $AllChannelsData;
+var ytPlayers = {};
 
 /*===========================================
 =            Getting videos data            =
 ===========================================*/
 
-
 //loading more videos from separate file and apending it to the list
-//in future this can be more lazy loading, divided into several files for example
-var additionalLoadedVideos = $('<div></div>');
-additionalLoadedVideos.load('http://zappingforyoutube.com/channelsList.html', function() {
-   additionalLoadedVideos.children().appendTo('#list-of-videos');
-});
-
-//we use DOM elements to get video IDs
-//we set list of videos in webflow, so we want to keep it usable in webflow while not showin
-//all the data for users
-
-var $initialChannel = $('#list-of-videos').find('.channel-item.current');
-
-//we hide uneeded links and data in DOM, so that we can keep edit them in Webflow but they won't be shown for users
-//we do this with CSS so I commented the line below
-//$('.video-item').addClass('hidden');
-
-//we want to hide videos that are not current
-//TODO: we currently only know what video is playing when we go this channel
-//We could know this before and calculate current video on each channel to show it on the list
-// $( "<style>.video-item { display:none }; .video-item.current {display:block} </style>" ).appendTo( "head" );
+//in future this can be more lazy loading, divided into several files
 
 //global variable with videos data, used in all other functions
-$AllChannelsData = $('[all-channels-data]');
+var $AllChannelsData = $('<div></div>'); //consider adding first 3 channels here so that they are immediately available?
+$AllChannelsData.load('http://zappingforyoutube.com/channelsList.html', function() { //TODO: cache with localStorage
+   init(); //init after videos are preloaded
+});
 
 /*=====  End of Getting videos data  ======*/
 
+function init() {
+    prepareChannelData();
+    initYoutubeScript();
+    addChannelNamesToTheMenu();
+}
 
-/*============================================================
-=            Initial state for menus and overlays            =
-============================================================*/
+function prepareChannelData() {
+    //we use DOM elements to get video IDs
+    $initialChannel = $AllChannelsData.find('.channel-item.current');
+    console.log($initialChannel);
 
-$('.intro-overlay').removeClass('hidden');
-$('.menu-box').addClass('hidden');
+    //we hide uneeded links and data in DOM, so that we can keep edit them in Webflow but they won't be shown for users
+    //we do this with CSS so I commented the line below
+    //$('.video-item').addClass('hidden');
 
-/*=====  End of Initial state for menus and overlays  ======*/
+    //we want to hide videos that are not current
+    //TODO: we currently only know what video is playing when we go this channel
+    //We could know this before and calculate current video on each channel to show it on the list
+    // $( "<style>.video-item { display:none }; .video-item.current {display:block} </style>" ).appendTo( "head" );
+}
 
+function addChannelNamesToTheMenu() {
+    var ChannelNames = $AllChannelsData.clone();
+    ChannelNames.find('.video-item').remove();
+    $('#list-of-channels').html(ChannelNames);
+}
 
+function initYoutubeScript() {
+    // This code loads the IFrame Player API code asynchronously.
+    var tag = document.createElement('script');
 
-
-
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+}
 
 // This function creates an <iframe> (and YouTube player)
 // after the API code downloads.
-var ytPlayers = {};
 function onYouTubeIframeAPIReady() {
     ytPlayers.player1 = new YT.Player('player1', {
         height: '100%',
@@ -149,6 +149,16 @@ function onYouTubeIframeAPIReady() {
 
 }
 
+/*============================================================
+=            Initial state for menus and overlays            =
+============================================================*/
+
+$('.intro-overlay').removeClass('hidden');
+$('.menu-box').addClass('hidden');
+
+/*=====  End of Initial state for menus and overlays  ======*/
+
+
 function playChannelXinPlayerY(channelData, playerObject) {
     var videoToLoad = calculateSeekToTime(channelData);
     playerObject.loadVideoById({
@@ -230,6 +240,7 @@ function switchToNextChannel() {
     //mark current playing channel on list
     currentChannelData.removeClass('current');
     nextChannelData.addClass('current');
+    updateMenuCurrentChannel();
 
     //swap which player is current, next and previous: 
     //current becomes previous, next becomes current, previous becomes next
@@ -282,6 +293,7 @@ function switchToPrevChannel() {
     //mark current playing video Id on list of links
     currentChannelData.removeClass('current');
     prevChannelData.addClass('current');
+    updateMenuCurrentChannel();
 
     //swap which player is current, next and previous: 
     //current becomes next, next becomes previous, previous becomes current
@@ -293,6 +305,12 @@ function switchToPrevChannel() {
     prevPlayerContainer.addClass('current-player');
 
     showInfoBarBriefly(prevChannelData);
+}
+
+function updateMenuCurrentChannel() {
+    var currentChannelIndex = $AllChannelsData.find('.channel-item.current').index();
+    $('#list-of-channels').find('.channel-item.current').removeClass('current');
+    $('#list-of-channels').find('.channel-item').eq(currentChannelIndex).addClass('current');
 }
 
 var infoBarTimer;
@@ -590,6 +608,8 @@ function starTimerUntilPrefetchingStops() {
 
 
 
+
+
 /*=============================
 =            Notes            =
 =============================*/
@@ -617,5 +637,11 @@ Second option: have a list of divs with video ids in Webflow and create and dest
 */
 
 /*=====  End of Notes  ======*/
+
+
+
+
+//}
+
 
 
