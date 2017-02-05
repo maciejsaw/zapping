@@ -141,6 +141,7 @@ a {
   bottom: 0px;
   -webkit-transition-duration: 1200ms;
   transition-duration: 1200ms;
+  cursor: none;
 }
 
 .bottom-controls-wrapper {
@@ -668,4 +669,3 @@ a {
     width: 40px;
   }
 }
-
